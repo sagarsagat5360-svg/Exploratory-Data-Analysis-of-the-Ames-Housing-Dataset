@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Exploratory analysis of 1,460 Ames, Iowa home sales from 2006 to 2010.">
+  <meta name="theme-color" content="#132238">
+  <title>What Shapes House Prices? | Ames Housing EDA</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to findings</a>
+  <header class="hero">
+    <nav class="top-nav" aria-label="Main navigation">
+      <a class="brand" href="#top">AMES HOUSING EDA</a>
+      <div class="nav-links">
+        <a href="#findings">Findings</a>
+        <a href="#data-quality">Data quality</a>
+        <a href="#project-files">Project files</a>
+      </div>
+    </nav>
+    <div class="hero-content" id="top">
+      <p class="eyebrow">MID-SEMESTER PROJECT · EXPLORATORY DATA ANALYSIS</p>
+      <h1>What shapes<br>house prices?</h1>
+      <p class="hero-deck">A look at sale prices, home quality, living area, neighborhood, and missing data in Ames, Iowa.</p>
+      <p class="hero-source">1,460 recorded sales · 2006–2010 · Ames Housing training dataset</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="metrics" aria-label="Dataset summary">
+      <div><span class="metric-value">1,460</span><span class="metric-label">home sales</span></div>
+      <div><span class="metric-value">$163k</span><span class="metric-label">median sale price</span></div>
+      <div><span class="metric-value">$181k</span><span class="metric-label">mean sale price</span></div>
+      <div><span class="metric-value">79</span><span class="metric-label">explanatory attributes</span></div>
+    </section>
+
+    <section class="section intro" id="findings">
+      <div class="section-heading">
+        <p class="eyebrow">THE QUESTION</p>
+        <h2>Which home characteristics move most closely with sale price?</h2>
+      </div>
+      <p>This project describes patterns in historical sales. It uses distribution summaries, Pearson correlations, group medians, and a review of missing values. The results show association, not cause, and they are not current market estimates.</p>
+    </section>
+
+    <section class="section split-section" aria-labelledby="distribution-title">
+      <div class="section-copy">
+        <p class="eyebrow">01 · PRICE DISTRIBUTION</p>
+        <h2 id="distribution-title">Most homes sold between $100,000 and $200,000</h2>
+        <p>The median is below the mean because a smaller set of high-priced homes stretches the upper tail.</p>
+        <p class="callout"><strong>910 of 1,460 sales</strong> fall in the $100k–$200k range.</p>
+      </div>
+      <figure class="chart-figure">
+        <div id="price-chart" class="chart" role="img" aria-label="Sale counts by price band"></div>
+        <figcaption>Recorded SalePrice, grouped into dollar bands. The final band includes homes above $350,000.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section split-section reverse" aria-labelledby="correlation-title">
+      <div class="section-copy">
+        <p class="eyebrow">02 · NUMERIC ASSOCIATIONS</p>
+        <h2 id="correlation-title">Overall quality has the strongest numeric correlation</h2>
+        <p>Overall material and finish quality shows the clearest linear association with SalePrice. Above-ground living area is next.</p>
+        <p class="callout"><strong>OverallQual: r = 0.791</strong><br>GrLivArea: r = 0.709</p>
+      </div>
+      <figure class="chart-figure">
+        <div id="correlation-chart" class="chart" role="img" aria-label="Pearson correlations with sale price"></div>
+        <figcaption>Pearson correlation for numeric features, excluding the row identifier and SalePrice.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section group-section" aria-labelledby="group-title">
+      <div class="section-heading wide-heading">
+        <p class="eyebrow">03 · GROUP COMPARISONS</p>
+        <h2 id="group-title">Median prices rise with quality and vary by neighborhood</h2>
+        <p>Choose a grouping to explore the median sale prices. Neighborhoods shown here have at least 20 recorded sales.</p>
+      </div>
+      <div class="chart-controls" role="group" aria-label="Choose a group comparison">
+        <button class="toggle is-active" type="button" data-view="quality" aria-pressed="true">Overall quality</button>
+        <button class="toggle" type="button" data-view="neighborhood" aria-pressed="false">Neighborhood</button>
+      </div>
+      <figure class="chart-figure full-chart">
+        <div id="group-chart" class="chart" role="img" aria-label="Median price by overall quality"></div>
+        <figcaption id="group-caption">Median SalePrice by overall quality score. Endpoint groups are small: quality 1 has 2 sales; quality 10 has 18.</figcaption>
+      </figure>
+      <p class="note">Median price ranges from $50,150 for quality 1 (n=2) to $432,390 for quality 10 (n=18). These group differences may reflect other home characteristics as well.</p>
+    </section>
+
+    <section class="section split-section" id="data-quality" aria-labelledby="missing-title">
+      <div class="section-copy">
+        <p class="eyebrow">04 · DATA QUALITY</p>
+        <h2 id="missing-title">Missing values cluster in optional features</h2>
+        <p>Several amenity fields are blank for most homes. In this dataset, a blank can mean the home does not have that feature.</p>
+        <p class="callout"><strong>Read the data description before imputing.</strong></p>
+      </div>
+      <figure class="chart-figure">
+        <div id="missing-chart" class="chart" role="img" aria-label="Share of rows missing for selected fields"></div>
+        <figcaption>Share of the 1,460 rows with blank values in each field.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section takeaway-section" aria-labelledby="takeaways-title">
+      <div class="section-heading">
+        <p class="eyebrow">WHAT THE DATA SAYS</p>
+        <h2 id="takeaways-title">Four takeaways</h2>
+      </div>
+      <ol class="takeaways">
+        <li><strong>Prices are right-skewed.</strong> The median ($163,000) is a better summary of a typical sale than the mean ($180,921).</li>
+        <li><strong>Quality and usable space stand out.</strong> OverallQual and GrLivArea have the largest numeric correlations with price.</li>
+        <li><strong>Group medians differ.</strong> Sale prices vary across quality levels and neighborhoods.</li>
+        <li><strong>Missingness has meaning.</strong> Some blanks represent an absent feature, not an unknown value.</li>
+      </ol>
+      <div class="limits">
+        <h3>Limits</h3>
+        <p>One city, historical sales from 2006–2010, and uneven group sizes. The analysis is descriptive; correlation does not establish causation.</p>
+      </div>
+    </section>
+
+    <section class="section files-section" id="project-files" aria-labelledby="files-title">
+      <div class="section-heading">
+        <p class="eyebrow">TAKE THE PROJECT WITH YOU</p>
+        <h2 id="files-title">Project files</h2>
+      </div>
+      <div class="file-links">
+        <a href="House_Prices_EDA_Project.pdf">Read the project report <span>PDF · findings and viva questions</span></a>
+        <a href="house_prices_eda.ipynb">Open the analysis notebook <span>Jupyter Notebook · Python</span></a>
+        <a href="ames_housing_train.csv">Download the dataset <span>CSV · 1,460 rows</span></a>
+      </div>
+      <p class="source-note">Dataset: <a href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data">Kaggle House Prices: Advanced Regression Techniques</a>. Ames Housing data background: De Cock (2011), <a href="https://doi.org/10.1080/10691898.2011.11889627">Journal of Statistics Education, 19(3)</a>. Dataset metadata lists an MIT license.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Exploratory Analysis of House Prices</span>
+    <a href="#top">Back to top ↑</a>
+  </footer>
+</body>
+</html>
